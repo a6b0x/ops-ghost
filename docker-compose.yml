@@ -1,0 +1,6 @@
+include:
+  - infra/fluvio/docker-compose.yml
+
+networks:
+  default:
+    driver: bridge

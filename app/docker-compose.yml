@@ -1,0 +1,5 @@
+services:
+  source-uniswap:
+    image: ghcr.io/a6b0x/source-uniswap:edge
+    container_name: source-uniswap
+    hostname: source-uniswap
