@@ -1,5 +1,22 @@
 services:
   source-uniswap:
-    image: ghcr.io/a6b0x/source-uniswap:edge
+    # build:
+    #   context: .
+    #   dockerfile: Dockerfile
+    image: ghcr.io/a6b0x/chain-pipe/source-uniswap:edge
     container_name: source-uniswap
     hostname: source-uniswap
+    # tty: true         
+    # stdin_open: true   
+    command: >
+      /app/source-uniswap
+      --ws-url wss://reth-ethereum.ithaca.xyz/ws
+      --factory-address 0x5C69bEe701ef814a2B6a3EDD4B1652CB9cc5aA6f
+      --broker-url sc:9003
+      --topic-name univ2-factoty-test
+    networks:
+      - ops-ghost_default
+
+networks:
+  ops-ghost_default:
+    external: true

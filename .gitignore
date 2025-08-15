@@ -1,1 +1,3 @@
-
+infra/fluvio/data/
+infra/fluvio/metadata/
+app/source-uniswap/source-uniswap

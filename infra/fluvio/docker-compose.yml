@@ -10,11 +10,11 @@ services:
       - RUST_LOG=info
     command: "./fluvio-run sc --local /fluvio/metadata"
     volumes:
-      - ./infra/fluvio/metadata:/fluvio/metadata
+      - ./metadata:/fluvio/metadata
 
   sc-setup:
     build:
-      context: ./infra/fluvio
+      context: .
       dockerfile: Dockerfile
     container_name: sc-setup
     environment:
@@ -33,7 +33,7 @@ services:
     container_name: spu
     hostname: spu
     volumes:
-      - ./infra/fluvio/data:/fluvio/data
+      - ./data:/fluvio/data
     environment:
       - RUST_LOG=info
     ports:
