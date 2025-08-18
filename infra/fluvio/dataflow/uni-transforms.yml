@@ -1,0 +1,13 @@
+#transforms.yml
+transforms:
+  - uses: infinyon/jolt@0.4.1
+    with:
+      spec:
+        - operation: remove
+          spec:
+           decoded:
+              _3: ""
+        - operation: default
+          spec:
+           source:
+              dex: uniswap-v2

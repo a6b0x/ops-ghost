@@ -19,6 +19,8 @@ services:
     container_name: sc-setup
     environment:
       - RUST_LOG=warn
+    volumes:
+      - ./dataflow:/dataflow 
     entrypoint: >
       /bin/sh -c "
       fluvio profile add docker sc:9003 docker;
