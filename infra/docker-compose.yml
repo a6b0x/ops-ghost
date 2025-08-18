@@ -1,5 +1,5 @@
 include:
-  - infra/fluvio/docker-compose.yml
+  - fluvio/docker-compose.yml
 
 networks:
   default:

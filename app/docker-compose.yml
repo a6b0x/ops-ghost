@@ -15,8 +15,8 @@ services:
       --broker-url sc:9003
       --topic-name univ2-factoty-test
     networks:
-      - ops-ghost_default
+      - infra_default 
 
 networks:
-  ops-ghost_default:
+  infra_default:
     external: true
