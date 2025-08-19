@@ -31,25 +31,3 @@ fluvio consume uniswap-v2-factoty-event -B -d
 fluvio consume univ2-factoty-test -B -d
 
 ```
-
-Fluvio测试
-```bash
-fluvio hub smartmodule download infinyon/jolt@0.4.1
-fluvio consume univ2-factoty-test --beginning --transforms-file dataflow/uni-transforms.yml 
-cdk deploy start -c dataflow/uni-trans.yml 
-```
-
-
-
-RisingWave 测试
-```bash
-# connect to risingwave
-psql -h localhost -p 4566 -d dev -U root
-# create database
-CREATE DATABASE test;
-\c test
-# list all tables
-\dt
-# exit
-\q
-```

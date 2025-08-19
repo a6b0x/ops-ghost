@@ -1,0 +1,26 @@
+services:
+  sdf:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        FLUVIO_VERSION: sdf-beta11
+    container_name: fluvio-sdf
+    hostname: fluvio-sdf
+    ports:
+      - 8888:8888
+    volumes:
+      - ./dataflow:/dataflow
+    environment:
+      - RUST_LOG=info
+    command: >
+      /bin/sh -c "
+        fluvio profile add docker sc:9003 docker &&
+        tail -f /dev/null
+      "
+    networks:
+      - infra_default  
+
+networks:
+  infra_default:
+    external: true
