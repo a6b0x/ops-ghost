@@ -1,0 +1,15 @@
+services:
+  arroyo:
+    image: ghcr.io/arroyosystems/arroyo:latest
+    container_name: arroyo
+    hostname: arroyo
+    ports:
+      - "5115:5115"
+    volumes:
+      - ./data:/root/.config/arroyo
+    networks:
+      - infra_default
+
+networks:
+  infra_default:
+    external: true
