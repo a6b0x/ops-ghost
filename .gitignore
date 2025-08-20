@@ -1,5 +1,6 @@
 infra/fluvio/data/
 infra/fluvio/metadata/
 app/source-uniswap/source-uniswap
-app/stream-uniswap/dataflow/.sdf/*
 infra/arroyo/data/*
+infra/fluvio/dataflow/sdf/*
+infra/nats/data/*

@@ -10,7 +10,7 @@ services:
     ports:
       - 8888:8888
     volumes:
-      - ./dataflow:/dataflow
+      - ./sdf:/sdf
     environment:
       - RUST_LOG=info
     command: >

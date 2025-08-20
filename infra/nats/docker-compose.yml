@@ -1,0 +1,22 @@
+
+services:
+  nats-server:
+    image: nats:latest
+    container_name: nats-server
+    command: --jetstream
+    ports:
+      - "4222:4222"
+      - "8222:8222"
+      - "6222:6222"
+    restart: unless-stopped
+    volumes:
+      - ./data:/tmp/nats
+
+  nats-client:
+    image: natsio/nats-box:latest
+    container_name: nats-client
+    depends_on:
+      - nats-server
+    command: tail -f /dev/null
+    volumes:
+      - ./scripts:/scripts
