@@ -4,3 +4,4 @@ app/source-uniswap/source-uniswap
 infra/arroyo/data/*
 infra/fluvio/dataflow/sdf/*
 infra/nats/data/*
+infra/pg/data/*
