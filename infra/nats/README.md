@@ -7,9 +7,10 @@ nats --server=nats-server:4222 stream ls
 # 查看流详细信息
 nats --server=nats-server:4222 stream info test-stream
 # 发布信息
-nats --server=nats-server:4222 pub test "hello"
+nats --server=nats-server:4222 pub test '{"key": "v1", "step": 5}'
 # 消费者管理
 nats --server=nats-server:4222 consumer add test-stream test-consumer
 nats --server=nats-server:4222 consumer rm test-stream test-consumer
 
+nats --server=nats-server:4222 sub push.deliver
 ```
