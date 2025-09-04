@@ -1,22 +1,77 @@
-services:
-  source-uniswap:
-    # build:
-    #   context: .
-    #   dockerfile: Dockerfile
-    image: ghcr.io/a6b0x/chain-pipe/source-uniswap:edge
-    container_name: source-uniswap
-    hostname: source-uniswap
-    # tty: true         
-    # stdin_open: true   
-    command: >
-      /app/source-uniswap
-      --ws-url wss://reth-ethereum.ithaca.xyz/ws
-      --factory-address 0x5C69bEe701ef814a2B6a3EDD4B1652CB9cc5aA6f
-      --broker-url sc:9003
-      --topic-name univ2-factoty-test
-    networks:
-      - infra_default 
-
 networks:
   infra_default:
     external: true
+
+services:
+  uniswap-source-1:
+    # build:
+    #   context: .
+    #   dockerfile: Dockerfile
+    image: ghcr.io/a6b0x/chain-pipe/uniswap-source:edge
+    container_name: uniswap-source-1
+    hostname: uniswap-source-1
+    # tty: true         
+    # stdin_open: true   
+    command: >
+      /app/uniswap-source pair-created-event
+      --ws-url wss://reth-ethereum.ithaca.xyz/ws
+      --factory-address 0x5C69bEe701ef814a2B6a3EDD4B1652CB9cc5aA6f
+      --server-url nats-server:4222
+      --subject-name eth.univ2.factory.pair_created.0
+    networks:
+      - infra_default 
+
+  uniswap-source-2:
+    image: ghcr.io/a6b0x/chain-pipe/uniswap-source:edge
+    container_name: uniswap-source-2
+    hostname: uniswap-source-2
+    command: >
+      /app/uniswap-source sync-event
+      --ws-url wss://reth-ethereum.ithaca.xyz/ws
+      --server-url nats-server:4222
+      --subject-name eth.univ2.pair.sync.0
+    networks:
+      - infra_default 
+
+  pair-enricher:
+    image: ghcr.io/a6b0x/chain-pipe/pair-enricher:edge
+    container_name: pair-enricher
+    hostname: pair-enricher
+    command: >
+      /app/pair-enricher
+      --http-url https://reth-ethereum.ithaca.xyz/rpc 
+      --server-url nats-server:4222
+      --subject-input eth.univ2.factory.pair_created.0 
+      --stream-name ETH_UNIV2_FACTORY
+      --kv-bucket univ2_new_pairs
+      --pair-address 0xB4e16d0168e52d35CaCD2c6185b44281Ec28C9Dc
+      --pair-address 0x0d4a11d5EEaaC28EC3F61d100daF4d40471f1852
+    networks:
+      - infra_default   
+
+  price-injector:
+    image: ghcr.io/a6b0x/chain-pipe/price-injector:edge
+    container_name: price-injector
+    hostname: price-injector
+    command: >
+      /app/price-injector
+      --server-url nats-server:4222 
+      --subject-input eth.univ2.pair.sync.0 
+      --subject-output eth.univ2.pair.sync.1 
+      --stream-name ETH_UNIV2_PAIR 
+      --kv-bucket univ2_new_pairs 
+    networks:
+      - infra_default    
+
+  price-sink:
+    image: ghcr.io/a6b0x/chain-pipe/price-sink:edge
+    container_name: price-sink
+    hostname: price-sink
+    command: >
+      /app/price-sink
+      --server-url nats-server:4222 
+      --subject-name eth.univ2.pair.sync.1 
+      --stream-name ETH_UNIV2_PAIR 
+      --dsn postgres://postgres:password@timescaledb:5432/testdb
+    networks:
+      - infra_default  
