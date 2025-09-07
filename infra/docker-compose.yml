@@ -1,5 +1,8 @@
 include:
-  - nats/docker-compose.yml
+  - dataflow/nats/docker-compose.yml
+  - tsdb/pg/docker-compose.yml
+  - dashboard/grafana/docker-compose.yml
+  - monitor/prometheus/docker-compose.yml
 
 networks:
   default:

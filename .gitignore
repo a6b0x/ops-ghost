@@ -1,7 +1,9 @@
-infra/fluvio/data/
-infra/fluvio/metadata/
+infra/dataflow/fluvio/data/
+infra/dataflow/fluvio/metadata/
 app/source-uniswap/source-uniswap
-infra/arroyo/data/*
-infra/fluvio/dataflow/sdf/*
-infra/nats/data/*
-infra/pg/data/*
+infra/dataflow/arroyo/data/*
+infra/dataflow/fluvio/dataflow/sdf/*
+infra/dataflow/nats/data/*
+infra/tsdb/pg/data/*
+infra/dashboard/grafana/data/*
+infra/monitor/prometheus/data/*

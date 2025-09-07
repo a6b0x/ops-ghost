@@ -1,0 +1,29 @@
+# networks:
+#   infra_default:
+#     external: true
+
+# volumes:
+#   pg_data:
+#     driver: local
+
+services:
+  timescaledb:
+    # image: timescale/timescaledb-ha:pg17
+    image: timescale/timescaledb:latest-pg17
+    container_name: timescaledb
+    hostname: timescaledb
+    # ports:
+    #   - "5432:5432"
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: testdb
+    volumes:
+      # - pg_data:/home/postgres/pgdata/data
+      - ./data:/var/lib/postgresql/data
+    # networks:
+    #   - infra_default
+
+
+
+

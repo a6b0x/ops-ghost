@@ -1,0 +1,17 @@
+# networks:
+#   infra_default:
+#     external: true
+services:
+  grafana:
+    image: grafana/grafana-enterprise
+    container_name: grafana
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./data:/var/lib/grafana
+    environment:
+      - GF_SECURITY_ADMIN_USER=admin
+      - GF_SECURITY_ADMIN_PASSWORD=2025
+    restart: unless-stopped
+    # networks:
+    #   - infra_default

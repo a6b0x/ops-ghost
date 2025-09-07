@@ -6,6 +6,8 @@ cd ops-ghost/infra
 docker compose up -d
 docker compose ps
 
+chmod -R 777 data
+
 # 查看网络
 docker network ls
 
@@ -20,7 +22,9 @@ nats --server=nats-server:4222 stream add ETH_UNIV2_PAIR --subjects="eth.univ2.p
 nats --server=nats-server:4222 stream ls
 
 #  数据库设置
+psql -d "postgres://postgres:password@localhost/postgres"
 CREATE DATABASE testdb;
+\c testdb
 
 CREATE TABLE price_ticks (
   time TIMESTAMPTZ NOT NULL,
