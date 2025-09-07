@@ -1,0 +1,11 @@
+version: "3.4"
+services:
+  neko:
+    image: "m1k1o/neko:remmina"
+    restart: "unless-stopped"
+    shm_size: "4gb"
+    ports:
+      - "8888:8888"
+      - "52000-52100:52000-52100/udp"
+    environment:
+      REMMINA_URL: vnc://root:root@89.117.20.24:8888

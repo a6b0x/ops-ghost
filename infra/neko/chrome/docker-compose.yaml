@@ -1,0 +1,20 @@
+version: "3.4"
+services:
+  neko:
+    image: "m1k1o/neko:chromium"
+    volumes:
+      - /root/neko/chrome/policies.json:/etc/chromium/policies/managed/policies.json
+    restart: "unless-stopped"
+    shm_size: "4gb"
+    ports:
+      - "8848:8080"
+      - "52000-52100:52000-52100/udp"
+    cap_add:
+      - SYS_ADMIN
+    environment:
+      NEKO_SCREEN: '1920x1080@30'
+      NEKO_PASSWORD: neko
+      NEKO_PASSWORD_ADMIN: admin
+      NEKO_EPR: 52000-52100
+      NEKO_IMPLICIT_CONTROL: 1
+
