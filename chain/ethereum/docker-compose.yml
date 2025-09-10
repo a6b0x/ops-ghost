@@ -1,0 +1,58 @@
+services:
+  reth:
+    image: ghcr.io/paradigmxyz/reth
+    container_name: reth
+    # restart: unless-stopped
+    ports:
+      - "30303:30303" # eth/66 peering
+      - "8545:8545" # HTTP-RPC Port
+      - "8546:8546" # WebSocket-RPC Port
+      - "8551:8551" # engine
+    volumes:
+      - ./reth/data:/root/.local/share/reth
+    # pid: host
+    command: >
+      node
+      --db.max-size 100GB
+      --disable-tx-gossip
+      --prune.bodies.pre-merge
+      --prune.receipts.pre-merge
+      --prune.transactionlookup.full
+      --prune.accounthistory.full
+      --prune.storagehistory.full 
+      --prune.senderrecovery.full  
+      --authrpc.addr 0.0.0.0 --authrpc.port 8551
+      --http --http.addr 0.0.0.0 --http.port 8545 --http.api "eth,net,web3"
+      --ws --ws.addr=0.0.0.0 --ws.port 8546 --ws.api "eth,net,web3"
+    networks:
+      - infra_default 
+
+  lighthouse:
+    # restart: unless-stopped
+    container_name: lighthouse
+    image: sigp/lighthouse:v7.0.1
+    depends_on:
+      - reth
+    ports:
+      - "5052:5052/tcp" # rpc
+      - "5053:5053/tcp"
+      - "5054:5054/tcp" # metrics
+      - "9000:9000/tcp" # p2p
+      - "9000:9000/udp" # p2p
+    volumes:
+      - ./lighthouse/data:/root/.lighthouse
+      - ./reth/data/mainnet/jwt.hex:/root/jwt.hex:ro
+    command: >
+      lighthouse bn
+      --network mainnet
+      --http --http-address 0.0.0.0
+      --execution-endpoint http://reth:8551
+      --execution-jwt /root/jwt.hex
+      --checkpoint-sync-url https://sync-mainnet.beaconcha.in
+      --checkpoint-sync-url-timeout=300
+    networks:
+      - infra_default 
+
+networks:
+  infra_default:
+    external: true

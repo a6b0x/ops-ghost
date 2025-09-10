@@ -7,4 +7,5 @@ infra/dataflow/nats/data/*
 infra/tsdb/pg/data/*
 infra/dashboard/grafana/data/*
 infra/monitor/prometheus/data/*
-chain/reth/data/*
+chain/ethereum/reth/data/*
+chain/ethereum/lighthouse/data/*
