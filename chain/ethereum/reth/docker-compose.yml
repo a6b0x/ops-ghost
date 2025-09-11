@@ -1,0 +1,31 @@
+services:
+  reth:
+    image: ghcr.io/paradigmxyz/reth
+    container_name: reth
+    # restart: unless-stopped
+    ports:
+      - "30303:30303" # eth/66 peering
+      - "8545:8545" # HTTP-RPC Port
+      - "8546:8546" # WebSocket-RPC Port
+      - "8551:8551" # engine
+    volumes:
+      - ./data:/root/.local/share/reth
+    # pid: host
+    command: >
+      node
+      --db.max-size 100GB
+      --disable-tx-gossip
+      --prune.bodies.pre-merge
+      --prune.receipts.pre-merge
+      --prune.transactionlookup.full
+      --prune.senderrecovery.full  
+      --authrpc.addr 0.0.0.0 
+      --authrpc.port 8551
+      --http --http.addr 0.0.0.0 --http.port 8545 --http.api "eth,net,web3"
+      --ws --ws.addr=0.0.0.0 --ws.port 8546 --ws.api "eth,net,web3"
+    networks:
+      - infra_default 
+
+networks:
+  infra_default:
+    external: true

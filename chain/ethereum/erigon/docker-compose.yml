@@ -1,0 +1,24 @@
+services:
+  erigon:
+    image: erigontech/erigon
+    container_name: erigon
+    # restart: unless-stopped
+    ports:
+      - "30303:30303/tcp"   # eth/68 peering
+      - "30303:30303/udp"
+      - "8545:8545"         # HTTP-RPC
+      - "8546:8546"         # WebSocket-RPC
+    volumes:
+      - ./data:/home/erigon/.local/share/erigon
+    command: >
+      --prune.mode=minimal   
+      --db.size.limit=350GB               
+      --http --http.addr=0.0.0.0 --http.port=8545 --http.api=eth,web3,net,debug,trace,txpool   
+      --ws --ws.port=8546
+    # --log.console.verbosity warn
+    networks:
+      - infra_default
+
+networks:
+  infra_default:
+    external: true

@@ -9,3 +9,4 @@ infra/dashboard/grafana/data/*
 infra/monitor/prometheus/data/*
 chain/ethereum/reth/data/*
 chain/ethereum/lighthouse/data/*
+chain/ethereum/erigon/data/*
