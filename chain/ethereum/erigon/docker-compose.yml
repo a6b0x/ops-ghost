@@ -12,7 +12,7 @@ services:
       - ./data:/home/erigon/.local/share/erigon
     command: >
       --prune.mode=minimal   
-      --db.size.limit=350GB               
+      --db.size.limit=320GB               
       --http --http.addr=0.0.0.0 --http.port=8545 --http.api=eth,web3,net,debug,trace,txpool   
       --ws --ws.port=8546
     # --log.console.verbosity warn
