@@ -30,6 +30,7 @@ services:
       --ws-url wss://reth-ethereum.ithaca.xyz/ws
       --server-url nats-server:4222
       --subject-name eth.univ2.pair.sync.0
+      --kv-bucket univ2_new_pairs
     networks:
       - infra_default 
 

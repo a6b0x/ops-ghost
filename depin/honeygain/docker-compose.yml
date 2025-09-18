@@ -1,0 +1,10 @@
+services:
+  honeygain:
+    image: honeygain/honeygain
+    container_name: honeygain
+    restart: always
+    command: >
+      -tou-accept
+      -email ${HONEY_EMAIL}
+      -pass ${HONEY_PASS}
+      -device ${HONEY_DEVICE}
