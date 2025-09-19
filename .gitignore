@@ -10,4 +10,4 @@ infra/monitor/prometheus/data/*
 chain/ethereum/reth/data/*
 chain/ethereum/lighthouse/data/*
 chain/ethereum/erigon/data/*
-depin/honeygain/.env
+dapp/depin/honeygain/.env
