@@ -1,0 +1,14 @@
+services:
+  silverbullet:
+    image: zefhemel/silverbullet:latest
+    container_name: silverbullet
+    restart: unless-stopped
+    # 端口映射：主机端口:容器端口
+    ports:
+      - "2602:3000"
+    volumes:
+      # 核心机制：将宿主机的 MD 文件夹直接映射到容器内的 /space
+      # 请将 './md-files' 替换为你实际存放 Markdown 文件的绝对路径或相对路径
+      - ./md-files:/space
+    # 可选：优化内存占用（SilverBullet 是基于 Deno 的，内存通常很低）
+    mem_limit: 512m
