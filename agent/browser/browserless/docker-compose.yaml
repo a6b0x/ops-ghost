@@ -1,0 +1,9 @@
+
+services:
+  browserless:
+    image: ghcr.io/browserless/chromium
+    container_name: browserless
+    restart: unless-stopped
+    # 端口映射：主机端口:容器端口
+    ports:
+      - "2602:3000"
