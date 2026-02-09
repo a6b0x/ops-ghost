@@ -1,9 +1,25 @@
-
 services:
   browserless:
-    image: ghcr.io/browserless/chromium
+    image: ghcr.io/browserless/chromium:latest
     container_name: browserless
     restart: unless-stopped
-    # 端口映射：主机端口:容器端口
+    
+    # 防止高负载下崩溃
+    shm_size: '2gb'
+
+    # 端口映射 主机端口:容器端口
     ports:
-      - "2602:3000"
+      - "127.0.0.1:2602:3000"
+
+    environment:
+      # 设置时区
+      - TZ=Asia/Shanghai
+      
+      # 60秒超时，防止僵尸进程
+      - CONNECTION_TIMEOUT=60000
+      
+      # 并发限制
+      - MAX_CONCURRENT_SESSIONS=10
+      
+      # 开启广告屏蔽 (加快速度，节省流量)
+      - BLOCK_ADS=true
