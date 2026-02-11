@@ -16,3 +16,5 @@ chain/ethereum/erigon/data/*
 node/depin/pipe-cdn/.env
 node/depin/honeygain/.env
 agent/openclaw/data/*
+agent/vscode/config/*
+agent/vscode/workspace/*

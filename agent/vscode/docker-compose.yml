@@ -1,0 +1,16 @@
+version: "3.8"
+services:
+  code-server:
+    image: ghcr.io/coder/code-server:4.108.2-39
+    container_name: code-server
+    environment:
+      # 访问密码，建议修改
+      - PASSWORD=openclaw
+      - TZ=Asia/Shanghai
+    volumes:
+      # 配置文件持久化
+      - ./config:/home/coder/.config
+      # 工作区数据持久化
+      - ./workspace:/home/coder/project
+    ports:
+      - "2028:8080"

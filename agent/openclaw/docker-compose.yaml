@@ -8,6 +8,7 @@ services:
       - ./data:/home/node/.openclaw
     ports:
       - "2026:18789"
+      - "2027:18792"
     init: true
     restart: unless-stopped
     command: node dist/index.js gateway --bind lan --port 18789
@@ -25,3 +26,21 @@ services:
     tty: true
     init: true
     entrypoint: [ "node", "dist/index.js" ]
+
+  browser:
+    image: ghcr.io/browserless/chromium:latest
+    restart: unless-stopped
+    # 防止高负载下崩溃
+    shm_size: '2gb'
+    # 端口映射 主机端口:容器端口
+    ports:
+      - "127.0.0.1:2603:3000"
+    environment:
+      # 设置时区
+      - TZ=Asia/Shanghai
+      # 60秒超时，防止僵尸进程
+      - CONNECTION_TIMEOUT=60000
+      # 并发限制
+      - MAX_CONCURRENT_SESSIONS=10
+      # 开启广告屏蔽 (加快速度，节省流量)
+      - BLOCK_ADS=true
