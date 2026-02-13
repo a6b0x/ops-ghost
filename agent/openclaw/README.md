@@ -23,4 +23,9 @@ docker compose run --rm openclaw-cli models fallbacks add qwen-portal/coder-mode
 # 健康检查
 docker compose run --rm openclaw-cli doctor
 
+# 命令行版本升级 先停止 
+openclaw gateway stop
+npm i -g openclaw@latest
+openclaw doctor
+openclaw -v
 ```
